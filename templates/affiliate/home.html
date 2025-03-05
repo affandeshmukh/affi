@@ -1,0 +1,64 @@
+{% include 'base/base.html' %} 
+{% load static %}
+  
+  <!-- Cards Section -->
+  <div class="container-card">
+    {% for affiliate in page_obj %}
+    <div class="card" style="background-color:{{ affiliate.color }}">
+        <div class='dot'>{{affiliate.discount}}%</div>
+        <div class="upload-time time">{{ affiliate.uploaded|timesince }}</div>
+
+        <img src="{{ affiliate.image }}" id="preview" alt="Product Image">
+        <div class="card-content">
+            <div class="card-title">{{ affiliate.title }}</div>
+            <div class="price">₹{{ affiliate.price }}
+                <span class="old-price">{{ affiliate.old_price }}</span>
+                {% comment %} <span class="discount">{{ affiliate.discount }}% off</span> {% endcomment %}
+            </div>
+            {% comment %} <div class="upload-time">{{ affiliate.uploaded|timesince }}</div> {% endcomment %}
+            <img src="/static/myapp/{{ affiliate.logo }}" id="preview" 
+                style="width:90px;height:50px;" class="img">
+            <a href="{{ affiliate.link }}" target="_blank" class="buy-btn">Grab Deal</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination Controls -->
+{% comment %} <div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">1</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+</div> {% endcomment %}
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+    
+    {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+            <span class="current">{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+</div>
+
+
+{% include 'base/footer.html' %} 

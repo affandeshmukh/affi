@@ -1,0 +1,79 @@
+
+{% load static %}
+  
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deals</title>
+    <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+    <script src="{% static 'myapp/script.js' %}"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="topnav">
+    <img src="/static/myapp/d1.png" style="width:200px; height: 100px; float: left;">
+    <button class="menu-toggle" onclick="openNav()">☰</button>
+
+    <div class="nav-links">
+      <a class="active" href="{% url 'home' %}">Home</a>
+        <a href="#Live Deals">Live Deals</a>
+        <a href="#Hotdeals">Hotdeals</a>
+        <a href="#Deal">Deal</a>
+        <a href="#Finder">Finder</a>
+        <a href="#Coupons">Coupons</a>
+        <a href="#Quiz Blog">Quiz Blog</a>
+    </div>      
+
+    <form method="GET" action='/search'>
+      <div class="container">
+      <input type="text" name="query" class="search-input" placeholder="Enter product title" value="{{ request.GET.query }}">
+      <button class="search-btn" type="submit">Search</button>
+  </form></div>
+
+  </div>
+
+  <!-- Sidenav for mobile -->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a class="active" href="{% url 'home' %}">Home</a>
+    <a href="#Live Deals">Live Deals</a>
+    <a href="#Hotdeals">Hotdeals</a>
+    <a href="#Deal">Deal</a>
+    <a href="#Finder">Finder</a>
+    <a href="#Coupons">Coupons</a>
+    <a href="#Quiz Blog">Quiz Blog</a>
+  </div>
+
+
+
+  <!-- Cards Section -->
+<div class="container-card" style=''>{% for affiliate in affiliates %}  <div class="wrapper-content">
+  <div class="block">
+  <div class="card" style='background-color:{{ affiliate.color }}'>
+      <img src="{{ affiliate.image }}"id="preview" alt="Product Image">
+      <div class="card-content">
+          <div class="card-title">{{ affiliate.title }}</div>
+          <div class="price">₹{{ affiliate.price }}<span class="old-price">{{ affiliate.old_price }}</span>
+             <span class="discount">{{ affiliate.discount }}% off</span></div>
+             
+          <div class="upload-time">{{affiliate.uploaded|timesince}}</div>
+          <img src="/static/myapp/{{affiliate.logo}}" id="preview" 
+          style="width:50px;height:50px;" class="img">
+  
+          <a href="{{affiliate.link}}" class="buy-btn">Grab Deal</a>
+          <a href="{% url 'update' affiliate.id %}" class="buy-btn">Edit</a>
+          <a href="{% url 'delete' affiliate.id %}" class="buy-btn">delete</a>
+
+      </div>
+
+  </div></div></div>
+  
+  {% endfor %}
+</div>
+<a class='a' href='{% url 'add_affiliate' %}'>Add product</a>
+
+
+{% include 'base/footer.html' %} 

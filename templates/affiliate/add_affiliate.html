@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+ 
+    <link rel="stylesheet" href="{% static 'myapp/add.css' %}">
+    <script src="{% static 'myapp/script.js' %}"></script>
+</head>
+<body>
+
+
+    <form method="POST">
+        
+        {% csrf_token %}
+        <div>
+            <label for="{{ form.title.id_for_label }}" name='title' style="float:left;">Title</label>
+            <input type="text" name="title" style="margin-bottom:2px;" value="{{ form.title.value|default:'' }}" maxlength="67">
+        </div>
+        <div>
+            <label for="{{ form.price.id_for_label }}">Price</label>
+            {{ form.price }}
+        </div>
+        <div>
+            <label for="{{ form.offer.id_for_label }}">Offer</label>
+            {{ form.discount }}
+        </div>
+
+        <div>
+            <label for="{{ form.link.id_for_label }}">Product Link</label>
+            {{ form.link }}
+        </div>
+        <div>
+            <label for="{{ form.image.id_for_label }}" id="image-input" accept="image/*">Image Link</label>
+            {{ form.image }}
+        </div>
+        <div>
+            <label for="{{ form.logo.id_for_label }}">Logo name</label>
+            {{ form.logo }}
+        </div>
+        <div>
+            <label for="{{ form.disc.id_for_label }}">old_price</label>
+         <del>   {{ form.old_price }}</del> 
+        </div>
+        <label for="{{ form.disc.id_for_label }}">Hot Deal</label>
+
+        <input type="text" name="color" style="margin-bottom:2px;" value="{{ form.color.value|default:'white' }}">
+    </div>
+
+        <button type="submit">Submit</button>
+        <a class='a' href='{% url 'logout' %}'>Logout</a>
+   
+
+
+    </form>
+    
+
+ 
+</body>
+</html>
