@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: django-app
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn myproject.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: "mysql://avnadmin:root@mysql-792488f-hartaria-6869.l.aivencloud.com:17202/defaultdb"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+
+  - type: pserv
+    name: mysql-db
+    env: private
+    plan: free
+    envVars:
+      - key: MYSQL_DATABASE
+        value: "defaultdb"
+      - key: MYSQL_USER
+        value: "avnadmin"
+      - key: MYSQL_PASSWORD
+        value: "AVNS_JrJ9_VZ1EwNC0jHmC7s"
+      - key: MYSQL_HOST
+        value: "mysql-792488f-hartaria-6869.l.aivencloud.com"
+      - key: MYSQL_PORT
+        value: "17202"
